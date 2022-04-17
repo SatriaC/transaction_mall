@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic unit test example.
      *
@@ -63,8 +64,6 @@ class AuthTest extends TestCase
         $response = $this->post('/auth/register/user', $data);
         //Assert it was successful
         $response->assertStatus(200);
-        //Delete data
-        User::where('email', $data['email'])->delete();
     }
 
     public function testRegister_Premium_User()
@@ -87,8 +86,6 @@ class AuthTest extends TestCase
         $response = $this->post('/auth/register/user', $data);
         //Assert it was successful
         $response->assertStatus(200);
-        //Delete data
-        User::where('email', $data['email'])->delete();
     }
     /**
      * @test
@@ -116,10 +113,6 @@ class AuthTest extends TestCase
             'password' => $item->password,
         ]);
         //Assert it was successful and a token was received
-        $response->assertStatus(200)->assertJson([
-            'created' => true,
-        ]);;
-        //Delete the user
-        User::where('email', $item->email)->delete();
+        $response->assertStatus(200);
     }
 }

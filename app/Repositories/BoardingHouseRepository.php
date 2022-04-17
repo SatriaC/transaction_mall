@@ -17,25 +17,25 @@ class BoardingHouseRepository extends BaseRepository
         # code...
         $data = $this->model
         ->leftJoin('users','users.id', '=', 'boarding_house.user_id')
-        ->orderBy('created_at', 'desc')
+        ->orderBy('boarding_house.created_at', 'desc')
         ->select(['boarding_house.id','boarding_house.name','users.name as owner_name', 'boarding_house.location',
         'boarding_house.price', 'boarding_house.type', 'boarding_house.description']);
 
         if (isset($request->name)) {
             # code...
-            $data->where('name', 'LIKE', '%'.$request->name.'%' );
+            $data->where('boarding_house.name', 'LIKE', '%'.$request->name.'%' );
             $data->orderBy('price', 'asc');
         }
 
         if (isset($request->location)) {
             # code...
-            $data->where('location', 'LIKE', '%'.$request->location.'%' );
+            $data->where('boarding_house.location', 'LIKE', '%'.$request->location.'%' );
             $data->orderBy('price', 'asc');
         }
 
         if(isset($request->start_price) && isset($request->end_price)){
-            $data->whereBetween('price', array($request->start_price, $request->end_price));
-            $data->orderBy('price', 'asc');
+            $data->whereBetween('boarding_house.price', array($request->start_price, $request->end_price));
+            $data->orderBy('boarding_house.price', 'asc');
         }
 
         return $data;

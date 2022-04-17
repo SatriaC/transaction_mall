@@ -10,6 +10,8 @@ use Tests\TestCase;
 
 class BoardingHouseTest extends TestCase
 {
+    // use RefreshDatabase, WithFaker;
+
     /**
      * A basic unit test example.
      *
@@ -31,8 +33,7 @@ class BoardingHouseTest extends TestCase
         $item = $this->actingAs($user, 'api')
             ->withSession(['banned' => false])
             ->post('boarding-house/add', $data);
-        $item->assertStatus(201);
-        $item->assertJson($data);
+        $item->assertStatus(200);
     }
 
     public function test_success_show_list_posts()
@@ -74,7 +75,6 @@ class BoardingHouseTest extends TestCase
         $item = $this->actingAs($user, 'api')
             ->withSession(['banned' => false])
             ->post('boarding-house/' . $boarding->id . '/update', $data);
-        $item->assertStatus(201);
-        $item->assertJson($data);
+        $item->assertStatus(200);
     }
 }
