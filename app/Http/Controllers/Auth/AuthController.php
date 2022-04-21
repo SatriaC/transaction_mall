@@ -24,13 +24,8 @@ class AuthController extends Controller
         return $this->service->login($request);
     }
 
-    public function user(Request $request)
+    public function register(Request $request)
     {
-        return $this->service->user($request);
-    }
-
-    public function owner(Request $request)
-    {
-        return $this->service->owner($request);
+        return $this->service->register($request);
     }
 }

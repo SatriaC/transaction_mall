@@ -32,14 +32,7 @@ class AuthService extends BaseService
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 $user = Auth::user();
                 $data['access_token'] = $user->createToken('nApp')->accessToken;
-                $permissions = array();
-                $dataPermissions = $user->getPermissionsViaRoles();
-
-                foreach ($dataPermissions as $item) {
-                    array_push($permissions, $item->name);
-                }
-
-                $data['permissions'] = $permissions;
+                
                 return $this->responseMessage('Login Success', 200, true, $data);
             } else {
                 return $this->responseMessage('These credentials do not match our records.', 400, false);
@@ -50,7 +43,7 @@ class AuthService extends BaseService
         }
     }
 
-    public function owner($request)
+    public function register($request)
     {
         # code...
         $db = DB::connection($this->connection);
@@ -70,28 +63,6 @@ class AuthService extends BaseService
             $db->rollback();
             return $this->responseMessage(__('content.message.create.failed'), 400, false);
         }
-    }
 
-    public function user($request)
-    {
-        # code...
-        $db = DB::connection($this->connection);
-        $db->beginTransaction();
-        try {
-            # code...
-            $data = $request->all();
-            $data['birthdate'] = Carbon::parse($request->birthdate)->format('Y-m-d');
-            $data['credits'] = $request->isPremium == 1 ? 40 : 20;
-            $data['password'] = Hash::make($request->password);
-            $item = $this->repo->create($data);
-            $db->commit();
-
-            return $this->responseMessage(__('content.message.create.success'), 200, true, $item);
-        } catch (Exception $exc) {
-            # code...
-            Log::error($exc);
-            $db->rollback();
-            return $this->responseMessage(__('content.message.create.failed'), 400, false);
-        }
     }
 }

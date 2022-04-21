@@ -27,8 +27,6 @@ class User extends Authenticatable
         'gender',
         'profession',
         'phone',
-        'credits',
-        'isPremium',
     ];
 
     /**

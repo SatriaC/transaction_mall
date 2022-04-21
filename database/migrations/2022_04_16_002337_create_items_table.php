@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('boarding_house', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('location')->nullable();
+            $table->integer('name')->nullable();
             $table->integer('price')->nullable();
             $table->integer('qty')->nullable();
-            $table->string('type')->nullable();
-            $table->text('description')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boarding_house');
+        Schema::dropIfExists('items');
     }
 };

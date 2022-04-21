@@ -2,13 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
+use App\Models\Voucher;
 use App\Repositories\BaseRepository;
 
-class UserRepository extends BaseRepository
+class VoucherRepository extends BaseRepository
 {
-    public function __construct(User $model)
+    public function __construct(Voucher $model)
     {
         $this->model = $model;
     }
+
 }
